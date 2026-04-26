@@ -49,7 +49,7 @@ const Navbar = () => {
                         <div className="relative">
                             <button
                                 onClick={() => setMenuOpen((o) => !o)}
-                                onBlur={() => setTimeout(() => setMenuOpen(false), 150)}
+                                
                                 className="relative group"
                             >
                                 <img
@@ -64,13 +64,15 @@ const Navbar = () => {
                                 <div className="absolute right-0 mt-3 w-48 backdrop-blur-xl bg-white/90 border border-stone-200 rounded-xl shadow-lg overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
 
                                     {/* SETTINGS */}
-                                    <Link
-                                        to="/setting"
-                                        onClick={() => setMenuOpen(false)}
-                                        className="block px-4 py-2.5 text-sm text-stone-700 hover:bg-stone-100 hover:text-stone-900 transition-colors"
+                                    <button
+                                        onClick={() => {
+                                            navigate("/setting");
+                                        }}
+                                        className="block w-full text-left px-4 py-2.5 text-sm text-stone-700 hover:bg-stone-100 hover:text-stone-900 transition-colors"
                                     >
                                         Settings
-                                    </Link>
+                                    </button>
+
 
                                     {/* LOGOUT */}
                                     <button

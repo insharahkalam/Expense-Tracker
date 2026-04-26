@@ -9,8 +9,8 @@ function Settings() {
     const [avatar, setAvatar] = useState("https://i.pravatar.cc/200?img=12");
     const [saved, setSaved] = useState(false);
 
-   
-    
+
+
 
     return (
         <div
@@ -32,7 +32,7 @@ function Settings() {
 
                     <Link
                         to="/home"
-                        className="text-sm text-stone-700 hover:text-stone-900 font-medium"
+                        className="text-sm border border-gray-200 px-6 py-2 rounded-xl text-stone-700 hover:text-stone-900 font-medium"
                     >
                         ← Back
                     </Link>
@@ -40,7 +40,7 @@ function Settings() {
                 </div>
             </nav>
 
-            <div className="w-full mx-auto p-6 md:p-10 space-y-8">
+            <div className="max-w-4xl mx-auto p-6 md:p-10 space-y-8">
 
                 {/* Heading */}
                 <div>
@@ -59,7 +59,7 @@ function Settings() {
 
                 {/* FORM */}
                 <form
-                   
+
                     className="backdrop-blur-xl bg-white/70 border border-stone-200 rounded-2xl p-8 shadow-sm space-y-8"
                 >
 
@@ -88,7 +88,7 @@ function Settings() {
 
                                 <button
                                     type="button"
-                                    
+
                                     className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm"
                                 >
                                     Upload new
@@ -107,10 +107,10 @@ function Settings() {
                             </div>
 
                             <input
-                             
+
                                 type="file"
                                 accept="image/*"
-                                
+
                                 className="hidden"
                             />
                         </div>
@@ -147,7 +147,7 @@ function Settings() {
                     </div>
 
                     {/* ACTIONS */}
-                    <div className="flex justify-between items-center pt-4 border-t">
+                    <div className="flex justify-between items-center ">
 
                         <span className={`text-sm ${saved ? "text-green-600" : "opacity-0"}`}>
                             ✓ Saved
