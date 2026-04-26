@@ -3,6 +3,7 @@ import Signup from '../pages/Signup'
 import Login from '../pages/Login'
 import Home from '../pages/Home'
 import ErrorPage from '../pages/ErrorPage'
+import Settings from "../pages/Settings";
 
 const Routing = () => {
     return (
@@ -12,6 +13,7 @@ const Routing = () => {
                     <Route path="/" element={<Signup />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/home" element={<Home />} />
+                    <Route path="/setting" element={<Settings />} />
                     <Route path={'*'} element={<ErrorPage />} />
                 </Routes>
             </BrowserRouter>
