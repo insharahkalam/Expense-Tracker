@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { client } from '../config/supabase';
 
@@ -7,7 +7,59 @@ const Navbar = () => {
 
     const [menuOpen, setMenuOpen] = useState(false);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+    const [userData, setUserData] = useState(null);
+
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const localUser = JSON.parse(localStorage.getItem("userData"));
+
+        if (localUser) {
+            setUserData({
+                username: localUser.name,
+                email: localUser.email,
+                avatar: localUser.profile_pic
+            });
+        } else {
+            getUserData(); // fallback
+        }
+    }, []);
+
+
+    const getUserData = async () => {
+        try {
+            // current logged-in user
+            const { data: { user } } = await client.auth.getUser();
+
+            if (!user) return;
+
+            // tumhari table se data lao (name + image)
+            const { data, error } = await client
+                .from("expense-userdata") // 👈 apni table ka naam check kar lena
+                .select("*")
+                .eq("user_id", user.id)
+                .single();
+
+            if (error) {
+                console.log("Fetch error:", error.message);
+                return;
+            }
+
+            setUserData({
+                email: user.email,
+                username: data?.name,
+                avatar: data?.profile_pic
+            });
+
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
+
+
+
 
     const handleLogout = async () => {
         try {
@@ -41,21 +93,29 @@ const Navbar = () => {
                     {/* Profile */}
                     <div className="flex items-center gap-3">
                         <div className="hidden sm:flex flex-col items-end">
-                            <span className="text-sm font-medium text-stone-900">John Doe</span>
-                            <span className="text-xs text-stone-500">Premium</span>
+                            <span className="text-sm font-medium text-stone-900">
+                                {userData?.username || "User"}
+                            </span>
+
+                            <span className="text-xs text-stone-500">
+                                {userData?.email}
+                            </span>
+
+
+
                         </div>
 
                         {/* Avatar Dropdown */}
                         <div className="relative">
                             <button
                                 onClick={() => setMenuOpen((o) => !o)}
-                                
+
                                 className="relative group"
                             >
                                 <img
-                                    src="https://i.pravatar.cc/100?img=12"
+                                    src={userData?.avatar}
                                     alt="Profile"
-                                    className="w-10 h-10 rounded-full border-2 border-stone-200 group-hover:border-stone-900 transition-all duration-200 object-cover"
+                                    className="w-10 h-10 rounded-full border-2 border-stone-200 object-cover"
                                 />
                                 <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"></span>
                             </button>
